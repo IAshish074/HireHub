@@ -191,7 +191,11 @@ const MyApplications = () => {
                         <span className="text-[10px] sm:text-xs text-red-400 font-medium">Are you sure?</span>
                         <button
                           type="button"
-                          onClick={() => handleCancelApplication(app._id || app.id)}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            handleCancelApplication(app._id || app.id);
+                          }}
                           disabled={isCancelling === (app._id || app.id)}
                           className="bg-red-500/20 text-red-400 hover:bg-red-500/30 px-2 py-1 rounded text-xs font-bold transition disabled:opacity-50"
                         >
@@ -199,7 +203,11 @@ const MyApplications = () => {
                         </button>
                         <button
                           type="button"
-                          onClick={() => setConfirmCancelId(null)}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            setConfirmCancelId(null);
+                          }}
                           disabled={isCancelling === (app._id || app.id)}
                           className="bg-slate-700 text-gray-300 hover:bg-slate-600 px-2 py-1 rounded text-xs font-bold transition disabled:opacity-50"
                         >
@@ -209,7 +217,11 @@ const MyApplications = () => {
                     ) : (
                       <button
                         type="button"
-                        onClick={() => setConfirmCancelId(app._id || app.id)}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          setConfirmCancelId(app._id || app.id);
+                        }}
                         className="flex items-center gap-1.5 text-red-400 hover:text-red-300 text-sm font-medium transition px-3 py-1.5 rounded-lg hover:bg-red-500/10"
                       >
                         <XCircle className="w-4 h-4" />
