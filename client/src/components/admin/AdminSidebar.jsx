@@ -15,7 +15,7 @@ const AdminSidebar = ({ isOpen: externalOpen, onClose }) => {
   const { logout } = useAuth();
   const navigate = useNavigate();
 
-  // 🔹 Internal state fallback
+
   const [internalOpen, setInternalOpen] = useState(false);
 
   const isOpen = externalOpen ?? internalOpen;
@@ -38,7 +38,7 @@ const AdminSidebar = ({ isOpen: externalOpen, onClose }) => {
 
   return (
     <>
-      {/* 🔹 Mobile Top Bar (AUTO) */}
+      
       <div className="lg:hidden fixed top-0 left-0 right-0 h-14 flex items-center px-4 bg-slate-950 border-b border-slate-800 z-50">
         <button
           onClick={() => setIsOpen(true)}
