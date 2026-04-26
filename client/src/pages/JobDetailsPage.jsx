@@ -35,7 +35,7 @@ const JobDetailsPage = () => {
       setError('');
 
       try {
-        const response = await fetch(`http://localhost:5000/api/jobs/${id}`);
+        const response = await fetch(`/api/jobs/${id}`);
         if (!response.ok) {
           throw new Error('Job not found or an error occurred.');
         }
