@@ -58,20 +58,6 @@ const Sidebar = ({ isOpen, onClose }) => {
 
   return (
     <>
-      {/* 🔹 MOBILE TOP BAR */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 h-14 flex items-center px-4 bg-slate-950 border-b border-slate-800 z-50">
-        <button
-          onClick={openSidebar}
-          className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-slate-800 transition"
-        >
-          <Menu className="w-6 h-6" />
-        </button>
-
-        <span className="ml-3 text-white font-semibold">
-          Menu
-        </span>
-      </div>
-
       {/* 🔹 Overlay */}
       {open && (
         <div
@@ -83,13 +69,13 @@ const Sidebar = ({ isOpen, onClose }) => {
       {/* 🔹 Sidebar */}
       <aside
         className={`
-          fixed top-14 left-0 bottom-0 
+          fixed top-0 left-0 bottom-0 
           w-64 sm:w-72 lg:w-64
           bg-slate-950/95 backdrop-blur-xl 
           border-r border-slate-800
           flex flex-col z-50
           transform transition-transform duration-300
-
+          lg:top-16
           ${open ? 'translate-x-0' : '-translate-x-full'}
           lg:translate-x-0
         `}
