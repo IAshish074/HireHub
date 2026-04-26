@@ -11,6 +11,7 @@ const MONGO_URI = process.env.MONGO_URI
 const allowedOrigins = [
   "http://localhost:5173",
   "http://127.0.0.1:5173",
+  "https://hire-hub-iota-ashen.vercel.app",
   process.env.CLIENT_URL // For Vercel frontend URL
 ].filter(Boolean);
 
