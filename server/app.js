@@ -12,18 +12,23 @@ const allowedOrigins = [
   "http://localhost:5173",
   "http://127.0.0.1:5173",
   "https://hire-hub-iota-ashen.vercel.app",
-  process.env.CLIENT_URL // For Vercel frontend URL
+  process.env.CLIENT_URL
 ].filter(Boolean);
 
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+    // Allow if no origin (like mobile apps or curl) or if in allowedOrigins
+    // Also allow any subdomains of vercel.app
+    if (!origin || allowedOrigins.includes(origin) || origin.includes('vercel.app')) {
       callback(null, true);
     } else {
+      console.log("Blocked by CORS:", origin);
       callback(new Error('Not allowed by CORS'));
     }
   },
-  credentials: true
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }))
 app.use(express.json())
 app.use(cookieParser())

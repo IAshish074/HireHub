@@ -1,124 +1,79 @@
 # HireHuB 🚀
 
-A modern, full-stack job portal built with the MERN stack (MongoDB, Express, React, Node.js) and styled with Tailwind CSS and Framer Motion. 
+A modern, full-stack job portal built with the **MERN stack** (MongoDB, Express, React, Node.js) and styled with Tailwind CSS and Framer Motion. 
 
-HireHuB bridges the gap between administrators and job seekers. Admins can effortlessly create and manage job postings while tracking applicants, and users can browse jobs, apply securely, and manage their applications from a centralized dashboard.
+HireHuB bridges the gap between administrators and job seekers, providing a seamless experience for both job management and application tracking.
+
+---
+
+## 🌐 Live Deployment
+
+- **Frontend:** [https://hire-hub-iota-ashen.vercel.app/](https://hire-hub-iota-ashen.vercel.app/) (Deployed on **Vercel**)
+- **Backend:** [https://hirehub-6usv.onrender.com/](https://hirehub-6usv.onrender.com/) (Deployed on **Render**)
 
 ---
 
 ## ✨ Features
 
-### For Job Seekers
+### 👤 For Job Seekers (Users)
 - **Dynamic Job Feed:** Browse through the latest job postings with robust search and filtering.
-- **Job Applications:** Securely apply to jobs with a single click.
-- **Application Management:** View the status of your applications and withdraw them seamlessly if you change your mind.
-- **Premium UI:** Enjoy smooth micro-animations and a sleek dark-mode aesthetic.
+- **Job Details:** View comprehensive information about roles, including salary, location, and company details.
+- **Easy Applications:** Apply to jobs with a single click and receive instant feedback.
+- **My Applications:** A personal dashboard to track all your applications and securely **withdraw/cancel** them if needed.
+- **Premium UI:** Smooth micro-animations and a sleek dark-mode aesthetic for a modern browsing experience.
 
-### For Administrators
-- **Job Management:** Full CRUD (Create, Read, Update, Delete) capabilities for job listings via a dedicated admin dashboard.
-- **Applicant Tracking:** View an aggregate list of all applicants, or filter down to see who applied for a specific job role.
-- **Role-Based Access Control:** Strict JWT middleware ensures that admin routes and API endpoints remain fully protected.
+### 🔐 For Administrators
+- **Admin Dashboard:** A high-level overview of platform stats including total jobs, users, and applications.
+- **Job Management:** Full CRUD (Create, Read, Update, Delete) capabilities for job listings.
+- **Inline Confirmation:** Safe deletion process with inline "Are you sure?" prompts to prevent accidental removal.
+- **Applicant Oversight:** View a global list of all candidates or filter applicants for a specific job listing directly from the job table.
+- **Role-Based Security:** Admins have exclusive access to management tools, protected by JWT middleware.
+
+> [!IMPORTANT]
+> **Admin Security Policy:** For security reasons, the "Admin" role cannot be selected during public registration. Administrators must be manually promoted or added directly to the database to ensure platform integrity.
 
 ---
 
 ## 🛠️ Tech Stack
 
-### Frontend (Client)
-- **Framework:** React 19 + Vite
-- **Styling:** Tailwind CSS v4
-- **Animations:** Framer Motion
-- **Icons:** Lucide React
-- **Notifications:** Toastr
-- **Routing:** React Router v7
-
-### Backend (Server)
-- **Runtime:** Node.js
-- **Framework:** Express.js
-- **Database:** MongoDB via Mongoose
-- **Authentication:** JSON Web Tokens (JWT) & bcryptjs
-- **CORS:** Secure origin configurations mapping to the Vite dev server
+- **Frontend:** React 19, Vite, Tailwind CSS v4, Framer Motion, Lucide React, React Router v7.
+- **Backend:** Node.js, Express.js.
+- **Database:** MongoDB (via Mongoose).
+- **Security:** JWT (JSON Web Tokens), bcryptjs, and custom Auth/Admin Middleware.
 
 ---
 
 ## 🚀 Getting Started
 
-Follow these steps to get a local development environment running.
-
 ### Prerequisites
-Make sure you have [Node.js](https://nodejs.org/) installed along with a running instance of MongoDB (locally or via MongoDB Atlas).
+- Node.js installed.
+- A MongoDB instance (local or Atlas).
 
-### 1. Clone the repository
-```bash
-git clone https://github.com/your-username/HireHuB.git
-cd HireHuB
-```
+### Local Setup
 
-### 2. Setup the Backend
-Open a terminal and navigate to the `server` directory:
-```bash
-cd server
-npm install
-```
+1. **Clone & Install:**
+   ```bash
+   git clone https://github.com/IAshish074/HireHub.git
+   cd HireHub
+   ```
 
-Create a `.env` file in the `server` directory and configure the following:
-```env
-PORT=5000
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_super_secret_jwt_key
-NODE_ENV=development
-```
+2. **Backend Configuration:**
+   - Go to `server/` and create a `.env` file:
+     ```env
+     PORT=5001
+     MONGO_URI=your_mongodb_uri
+     JWT_SECRET=your_jwt_secret
+     ```
+   - Run `npm install` and `npm run dev`.
 
-Start the backend server:
-```bash
-npm start
-```
-*(The backend should now be running on `http://localhost:5000`)*
-
-### 3. Setup the Frontend
-Open a new terminal window and navigate to the `client` directory:
-```bash
-cd client
-npm install
-```
-
-Since the frontend utilizes Vite proxying (configured in `vite.config.js`), you do not need to hardcode the backend URL. Simply start the dev server:
-```bash
-npm run dev
-```
-*(The frontend should now be running on `http://localhost:5173`)*
-
----
-
-## 📂 Project Structure
-
-```text
-HireHuB/
-├── client/                 # React Frontend
-│   ├── src/
-│   │   ├── components/     # Reusable UI elements (Admin, Jobs, Layouts)
-│   │   ├── context/        # React Context (AuthContext)
-│   │   ├── pages/          # Main route components
-│   │   ├── App.jsx         # App routing setup
-│   │   └── main.jsx        # React entry point
-│   └── vite.config.js      # Vite proxy settings
-│
-└── server/                 # Node.js + Express Backend
-    ├── config/             # DB connection logic
-    ├── controllers/        # Route logic (Auth, Admin, Jobs, Applications)
-    ├── middleware/         # Auth & Admin route protections
-    ├── models/             # Mongoose schemas (User, Job, Application)
-    ├── routers/            # Express router definitions
-    └── app.js              # Server entry point
-```
+3. **Frontend Configuration:**
+   - Go to `client/` and run `npm install`.
+   - Start the dev server with `npm run dev`.
 
 ---
 
 ## 🤝 Contributing
-
-Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/your-username/HireHuB/issues).
-
----
+Contributions are welcome! Feel free to open issues or submit pull requests.
 
 ## 📜 License
-
-This project is licensed under the MIT License.
+MIT License
