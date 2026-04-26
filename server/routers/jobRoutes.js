@@ -22,6 +22,6 @@ router.get('/', jobController.getAllJobs);
 
 // @route   GET /api/jobs/:id
 // @desc    Get single job
-router.get('/:id', jobController.getJobById);
+router.get('/:id', authMiddleware, jobController.getJobById);
 
 module.exports = router;

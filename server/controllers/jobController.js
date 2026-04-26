@@ -1,4 +1,5 @@
 const Job = require('../models/Job');
+const Application = require('../models/Application');
 
 // 🔹 Create Job
 exports.createJob = async (req, res) => {
@@ -87,13 +88,22 @@ exports.getAllJobs = async (req, res) => {
 exports.getJobById = async (req, res) => {
   try {
     const { id } = req.params;
+    const userId = req.user?.id; // Attached by authMiddleware
+
     const job = await Job.findById(id);
 
     if (!job) {
       return res.status(404).json({ message: "Job not found" });
     }
 
-    res.status(200).json({ job });
+    // Check if current user has already applied
+    let hasApplied = false;
+    if (userId) {
+      const existingApplication = await Application.findOne({ user: userId, job: id });
+      hasApplied = !!existingApplication;
+    }
+
+    res.status(200).json({ job, hasApplied });
   } catch (error) {
     console.error('Get job by id error:', error);
     res.status(500).json({ message: "Error fetching job details" });

@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ChevronLeft, Loader2 } from 'lucide-react';
+import { ChevronLeft, Loader2, CheckCircle } from 'lucide-react';
 import toastr from 'toastr';
 import 'toastr/build/toastr.min.css';
 
+import { useAuth } from '../context/AuthContext';
 import JobDetails from '../components/jobs/JobDetails';
 import ApplyButton from '../components/jobs/ApplyButton';
 import SuccessMessage from '../components/ui/SuccessMessage';
 
 const JobDetailsPage = () => {
   const { id } = useParams();
+  const { token } = useAuth();
   const [job, setJob] = useState(null);
+  const [hasApplied, setHasApplied] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [isAppliedSuccessfully, setIsAppliedSuccessfully] = useState(false);
@@ -35,14 +38,21 @@ const JobDetailsPage = () => {
       setError('');
 
       try {
-        const response = await fetch(`/api/jobs/${id}`);
+        const response = await fetch(`/api/jobs/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
         if (!response.ok) {
           throw new Error('Job not found or an error occurred.');
         }
 
         const data = await response.json();
         
-        if (isMounted) setJob(data.job || data);
+        if (isMounted) {
+          setJob(data.job || data);
+          setHasApplied(data.hasApplied || false);
+        }
       } catch (err) {
         if (isMounted) {
           setError('We could not find this job listing. It may have been removed or the URL is incorrect.');
@@ -52,16 +62,19 @@ const JobDetailsPage = () => {
       }
     };
 
-    loadJob();
+    if (token) {
+      loadJob();
+    }
 
     return () => {
       isMounted = false; // prevent state update after unmount
     };
-  }, [id]);
+  }, [id, token]);
 
   const handleSimulateApply = () => {
     if (!job) return;
     setIsAppliedSuccessfully(true);
+    setHasApplied(true);
     toastr.success(`Successfully applied for the ${job.title} role!`, 'Application Sent');
   };
 
@@ -135,15 +148,31 @@ const JobDetailsPage = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className={`lg:sticky lg:top-24 ${isAppliedSuccessfully ? '' : 'bg-slate-900/80 backdrop-blur-xl border border-slate-800 rounded-xl sm:rounded-2xl p-5 sm:p-6'}`}
+            className={`lg:sticky lg:top-24 ${(isAppliedSuccessfully || hasApplied) ? '' : 'bg-slate-900/80 backdrop-blur-xl border border-slate-800 rounded-xl sm:rounded-2xl p-5 sm:p-6'}`}
           >
-            {isAppliedSuccessfully ? (
+            {(isAppliedSuccessfully) ? (
               <SuccessMessage 
                 title="Application Sent!" 
                 message={`Your application for ${job.title} at ${job.company} has been securely submitted.`}
                 linkTo="/my-applications"
                 linkText="View My Applications"
               />
+            ) : hasApplied ? (
+              <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-6 text-center">
+                <div className="w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center mx-auto mb-4">
+                  <CheckCircle className="w-6 h-6 text-emerald-400" />
+                </div>
+                <h3 className="text-lg font-semibold text-white mb-2">Already Applied</h3>
+                <p className="text-xs text-gray-400 mb-5">
+                  You have already submitted an application for this position.
+                </p>
+                <Link 
+                  to="/my-applications"
+                  className="inline-flex w-full items-center justify-center px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white text-sm font-medium rounded-lg transition"
+                >
+                  View My Applications
+                </Link>
+              </div>
             ) : (
               <>
                 <h3 className="text-base sm:text-lg font-semibold text-white mb-2">
