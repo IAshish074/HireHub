@@ -7,9 +7,21 @@ const cookieParser = require("cookie-parser")
 const PORT = process.env.PORT
 const MONGO_URI = process.env.MONGO_URI
 
-// Detailed CORS configuration for explicit proxying from standard React environments
+// Detailed CORS configuration
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
+  process.env.CLIENT_URL // For Vercel frontend URL
+].filter(Boolean);
+
 app.use(cors({
-  origin: ["http://localhost:5173", "http://127.0.0.1:5173"],
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }))
 app.use(express.json())
