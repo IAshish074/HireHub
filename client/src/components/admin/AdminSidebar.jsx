@@ -11,17 +11,26 @@ import {
 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 
-const AdminSidebar = ({ isOpen: externalOpen, onClose }) => {
+const AdminSidebar = ({ isOpen: externalOpen, onOpen, onClose }) => {
   const { logout } = useAuth();
   const navigate = useNavigate();
 
-
   const [internalOpen, setInternalOpen] = useState(false);
 
-  const isOpen = externalOpen ?? internalOpen;
-  const setIsOpen = onClose
-    ? (val) => (val ? null : onClose())
-    : setInternalOpen;
+  // Use external state if provided, otherwise fallback to internal
+  const isOpen = externalOpen !== undefined ? externalOpen : internalOpen;
+
+  const toggleSidebar = (open) => {
+    if (open) {
+      if (onOpen) onOpen();
+      else setInternalOpen(true);
+    } else {
+      if (onClose) onClose();
+      else setInternalOpen(false);
+    }
+  };
+
+  const setIsOpen = toggleSidebar; // For backward compatibility within this file
 
   const navItems = [
     { name: "Dashboard", path: "/admin", icon: LayoutDashboard },

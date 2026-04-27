@@ -109,6 +109,7 @@ const AdminUsersPage = () => {
       {/* 🔹 Sidebar */}
       <AdminSidebar
         isOpen={isSidebarOpen}
+        onOpen={() => setIsSidebarOpen(true)}
         onClose={() => setIsSidebarOpen(false)}
       />
 
@@ -121,12 +122,14 @@ const AdminUsersPage = () => {
           animate={{ opacity: 1, y: 0 }}
           className="mb-6 sm:mb-8"
         >
-          <h1 className="text-2xl sm:text-3xl font-semibold text-white">
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-semibold text-white">
             User Management
           </h1>
           <p className="text-gray-400 text-sm sm:text-base mt-1">
             View and manage platform users.
           </p>
+          </div>
         </motion.div>
 
         {/* 🔹 Error */}

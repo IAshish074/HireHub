@@ -102,26 +102,19 @@ const AdminDashboard = () => {
       {/* 🔹 Sidebar */}
       <AdminSidebar
         isOpen={isSidebarOpen}
+        onOpen={() => setIsSidebarOpen(true)}
         onClose={() => setIsSidebarOpen(false)}
       />
 
       {/* 🔹 Main */}
-      <div className="flex-1 w-full lg:pl-64 px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+      <div className="flex-1 w-full lg:pl-64 px-4 sm:px-6 lg:px-8 py-6 sm:py-8 mt-14 lg:mt-0">
 
         {/* 🔹 Header */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center gap-3 mb-6 sm:mb-8"
+          className="mb-6 sm:mb-8"
         >
-          {/* ☰ Mobile Menu */}
-          <button
-            onClick={() => setIsSidebarOpen(true)}
-            className="lg:hidden p-2 rounded-lg text-gray-400 hover:text-white hover:bg-slate-800 transition"
-          >
-            <Menu className="w-6 h-6" />
-          </button>
-
           <div>
             <h1 className="text-2xl sm:text-3xl font-semibold text-white">
               Admin Dashboard
